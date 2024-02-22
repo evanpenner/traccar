@@ -213,6 +213,7 @@ public class Tlt2hProtocolDecoder extends BaseProtocolDecoder {
                     } else {
                         getLastLocation(position, null);
                         position.setTime(new Date());
+                        position.setValid(false);
                     }
 
                 } else {
