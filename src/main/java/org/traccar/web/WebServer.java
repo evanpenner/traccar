@@ -139,7 +139,7 @@ public class WebServer implements LifecycleObject {
     }
 
     private void initWebApp(ServletContextHandler servletHandler) {
-        ServletHolder servletHolder = new ServletHolder(new ModernDefaultServlet(config));
+        ServletHolder servletHolder = new ServletHolder(new DefaultOverrideServlet(config));
         servletHolder.setInitParameter("resourceBase", new File(config.getString(Keys.WEB_PATH)).getAbsolutePath());
         servletHolder.setInitParameter("dirAllowed", "false");
         if (config.getBoolean(Keys.WEB_DEBUG)) {
@@ -165,6 +165,7 @@ public class WebServer implements LifecycleObject {
         }
 
         ResourceConfig resourceConfig = new ResourceConfig();
+        resourceConfig.property("jersey.config.server.wadl.disableWadl", true);
         resourceConfig.registerClasses(
                 JacksonFeature.class,
                 ObjectMapperContextResolver.class,
@@ -216,6 +217,8 @@ public class WebServer implements LifecycleObject {
                     break;
             }
         }
+
+        sessionCookieConfig.setHttpOnly(true);
     }
 
     @Override

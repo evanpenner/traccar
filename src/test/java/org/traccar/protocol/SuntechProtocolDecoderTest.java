@@ -12,6 +12,16 @@ public class SuntechProtocolDecoderTest extends ProtocolTest {
 
         var decoder = inject(new SuntechProtocolDecoder(null));
 
+        verifyPosition(decoder, binary(
+                "02003210511340877028813f180c170016041051290c0635652d793653000038001a30e601665e560000000100750002712704000103"));
+
+        verifyPosition(decoder, buffer(
+                "ST419STT;807587388;306;41;04;30062;724;2;-65;5221;255;30061;724;2;5221;0;0;30212;724;2;5221;0;0;30071;724;2;5221;0;0;30222;724;2;5221;0;0;30213;724;2;5221;0;0;30063;724;2;5221;0;0;3.92;1;0185;1;00010000;26.1;1;20240729;19:22:43;-22.754650;-043.437569;000.185;297.35;6;1"));
+
+        verifyAttribute(decoder, buffer(
+                "UEX;1610020241;03FFFFFF;161;3.0.9;0;20240506;15:52:55;00006697;724;11;4EDA;33;-5.129240;-42.797868;0.00;0.00;11;1;00000001;00000000;24;GTSL|6|1|0|22574684|1|\r\n;A7;;164;0;11.82"),
+                Position.KEY_DRIVER_UNIQUE_ID, "22574684");
+
         verifyAttributes(decoder, buffer(
                 "ST410STT;109815653;445;03;16531;724;10;-77;6011;7;16273;724;10;7511;0;0;13903;724;10;6011;0;0;7671;724;10;7111;0;0;16533;724;10;6011;0;0;0;0;0;0;0;0;0;0;0;0;0;0;3.86;0;0098;1;003;;;;;;;;;"));
 
@@ -193,6 +203,10 @@ public class SuntechProtocolDecoderTest extends ProtocolTest {
         verifyPosition(decoder, buffer(
                 "ST910;Emergency;205283272;500;20150716;19:12:01;-23.659019;-046.695403;000.602;000.00;0;4.2;1;1;02;10820;2fdb090736;724;05;0;2311;255;0;100"));
 
+        verifyAttribute(decoder, buffer(
+                "ST300CMD;Res;511848119;315;PresetA;NTW;0;eseye.com;user;pass;rastreamento.inviocar.com;6011;;;;;RPT;1800;80;80;3;1200;0;0;0;0;EVT;0;10;0;12;3;9;1;30;0;5;7;1;0;0;0;0;0;0;0;9;9;0;0;0;GSM;0;;;;;0;;;;;;;;SVC;1;200;0;0;0;0;1;0;1;0;0;0;0;ADP;T;T;0;;0;0;0;0;0;0;MSR;600;0.10;0.10;0.70;MBV;0.00;0.00;17.20;9.00;18.00;0.00;0.00;NPT;25.0;0;30;0;0;500;300;5;10;100;5;180;100;1;DEV;0;0;0;1;0;0;0;"),
+                Position.KEY_RESULT, "315;PresetA;NTW;0;eseye.com;user;pass;rastreamento.inviocar.com;6011;;;;;RPT;1800;80;80;3;1200;0;0;0;0;EVT;0;10;0;12;3;9;1;30;0;5;7;1;0;0;0;0;0;0;0;9;9;0;0;0;GSM;0;;;;;0;;;;;;;;SVC;1;200;0;0;0;0;1;0;1;0;0;0;0;ADP;T;T;0;;0;0;0;0;0;0;MSR;600;0.10;0.10;0.70;MBV;0.00;0.00;17.20;9.00;18.00;0.00;0.00;NPT;25.0;0;30;0;0;500;300;5;10;100;5;180;100;1;DEV;0;0;0;1;0;0;0;");
+
         decoder.setProtocolType(1);
 
         verifyPosition(decoder, buffer(
@@ -229,7 +243,7 @@ public class SuntechProtocolDecoderTest extends ProtocolTest {
 
         var decoder = inject(new SuntechProtocolDecoder(null));
 
-        decoder.setHbm(true);
+        decoder.setHbm(1);
         decoder.setIncludeAdc(true);
 
         verifyAttribute(decoder, buffer(
@@ -258,7 +272,7 @@ public class SuntechProtocolDecoderTest extends ProtocolTest {
 
         var decoder = inject(new SuntechProtocolDecoder(null));
 
-        decoder.setHbm(true);
+        decoder.setHbm(1);
         decoder.setIncludeRpm(true);
 
         verifyAttribute(decoder, buffer(
@@ -272,7 +286,7 @@ public class SuntechProtocolDecoderTest extends ProtocolTest {
 
         var decoder = inject(new SuntechProtocolDecoder(null));
 
-        decoder.setHbm(true);
+        decoder.setHbm(1);
 
         verifyAttribute(decoder, buffer(
                 "ST300ALT;007239104;40;313;20190112;01:07:16;c99139;+04.703287;-074.148897;000.000;189.72;21;1;425512;12.61;100000;33;003188;4.1;1"),
@@ -293,7 +307,7 @@ public class SuntechProtocolDecoderTest extends ProtocolTest {
                 "ST300HTE;100850001;04;248;20110101;00:13:52;167559;12.28;004005;0.0;1;0;3;3;0;-22.881018;-047.070831;-22.881018;-047.070831;000.000;000.000;0;0;3;0;0;0;01E04D44160000"),
                 Position.KEY_DRIVER_UNIQUE_ID, "01E04D44160000");
 
-        decoder.setHbm(true);
+        decoder.setHbm(1);
 
         verifyAttribute(decoder, buffer(
                 "ST300STT;807469112;45;315;20231215;15:25:03;104147;-16.030168;-047.989150;000.000;000.00;19;1;8600;12.14;000010;1;0456;000373;4.1;1;01B54221010000;0"),
